@@ -3,7 +3,7 @@ from discord import app_commands
 from discord.ext import commands
 import yt_dlp
 import asyncio
-
+from music.spotify import is_spotify_url, get_spotify_query
 from music.player import queue, play_next
 
 
@@ -11,12 +11,25 @@ def get_song_info(query: str):
     ydl_opts = {
         "format": "bestaudio/best",
         "quiet": True,
-        "default_search": "ytsearch",
         "noplaylist": True,
     }
 
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-        info = ydl.extract_info(query, download=False)
+
+        # 🔗 SoundCloud link → langsung extract
+        if is_soundcloud_url(query):
+            info = ydl.extract_info(query, download=False)
+
+        # 🔗 YouTube link → langsung extract
+        elif is_youtube_url(query):
+            info = ydl.extract_info(query, download=False)
+
+        # 🔍 BUKAN LINK → YouTube search ONLY
+        else:
+            info = ydl.extract_info(
+                f"ytsearch1:{query}",
+                download=False
+            )["entries"][0]
 
         if "entries" in info:
             info = info["entries"][0]
@@ -25,12 +38,18 @@ def get_song_info(query: str):
             "title": info["title"],
             "duration": info.get("duration", 0),
             "url": info["webpage_url"],
-            "thumbnail": info.get("thumbnail")
+            "thumbnail": info.get("thumbnail"),
+            "source": (
+                "soundcloud" if is_soundcloud_url(query)
+                else "youtube"
+            )
         }
 
 
-def format_duration(seconds: int):
-    m, s = divmod(seconds, 60)
+def format_duration(seconds): 
+    if not seconds: return "0:00" 
+    seconds = int(seconds) 
+    m, s = divmod(seconds, 60) 
     return f"{m}:{s:02d}"
 
 
@@ -81,6 +100,9 @@ class Play(commands.Cog):
         # 🔎 SEARCH SONG (ASYNC SAFE)
         # ==============================
         loop = asyncio.get_running_loop()
+        if is_spotify_url(query):
+            query = await loop.run_in_executor(None, get_spotify_query, query)
+
         song = await loop.run_in_executor(None, get_song_info, query)
 
         queue.append({
@@ -111,6 +133,21 @@ class Play(commands.Cog):
         if not vc.is_playing() and not vc.is_paused():
             await play_next(self.bot, vc, interaction.channel)
 
+def is_soundcloud_url(text: str) -> bool:
+    return "soundcloud.com" in text
+
+def is_youtube_url(text: str) -> bool:
+    return "youtube.com" in text or "youtu.be" in text
+
+def format_duration(seconds):
+    if not seconds:
+        return "0:00"
+
+    seconds = int(seconds)
+    m, s = divmod(seconds, 60)
+    return f"{m}:{s:02d}"
+
 
 async def setup(bot):
     await bot.add_cog(Play(bot))
+

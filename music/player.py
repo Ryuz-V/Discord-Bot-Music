@@ -16,7 +16,10 @@ YDL_OPTIONS = {
     "format": "bestaudio/best",
     "quiet": True,
     "noplaylist": True,
+    "default_search": "ytsearch",
+    "source_address": "0.0.0.0"
 }
+
 
 FFMPEG_OPTIONS = {
     "before_options": "-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5",

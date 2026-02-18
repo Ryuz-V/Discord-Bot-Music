@@ -21,6 +21,15 @@ class MusicControl(discord.ui.View):
 
     @discord.ui.button(label="⏹ Stop", style=discord.ButtonStyle.secondary  )
     async def stop(self, interaction: discord.Interaction, button: discord.ui.Button):
+        from music.player import queue  # import di sini biar aman circular
+        if self.vc.is_playing() or self.vc.is_paused():
+            self.vc.stop()
+        
+        queue.clear()
+        
+        if self.vc.is_connected():
+            await self.vc.disconnect()
+
         self.vc.stop()
         await interaction.response.defer()
 
