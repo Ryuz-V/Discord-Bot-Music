@@ -10,3 +10,5 @@ ENV/
 *.sqlite3
 *.log
 requirements.txt
+.cache/
+.cache
