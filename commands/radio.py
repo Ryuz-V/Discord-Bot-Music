@@ -4,7 +4,6 @@ from discord.ext import commands
 import aiohttp
 
 class RadioView(discord.ui.View):
-    # Parameter query dihapus dari __init__
     def __init__(self, interaction: discord.Interaction, is_change: bool = False):
         super().__init__(timeout=180)
         self.interaction = interaction
@@ -22,8 +21,6 @@ class RadioView(discord.ui.View):
             "reverse": "true",
             "hidebroken": "true"
         }
-        
-        # Pengecekan query dihapus, langsung fetch top 500 stations
         async with aiohttp.ClientSession() as session:
             async with session.get(url, params=params, headers={'User-Agent': 'Jukebox Bot'}) as response:
                 if response.status == 200:
@@ -136,8 +133,6 @@ class RadioView(discord.ui.View):
             return await interaction.response.send_message(embed=embed, ephemeral=True)
 
         await interaction.response.defer()
-
-        # Disable all components to prevent multiple selections
         for item in self.children:
             item.disabled = True
         try:
@@ -201,13 +196,9 @@ class RadioView(discord.ui.View):
 class Radio(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-
-    # Parameter query dihapus dari command slash ini
     @app_commands.command(name="radio", description="Play Internet Radio Stations Cross The World")
     async def radio(self, interaction: discord.Interaction):
         await interaction.response.defer()
-        
-        # Panggilan RadioView disesuaikan (tanpa parameter query)
         view = RadioView(interaction)
         await view.fetch_stations()
         
@@ -220,7 +211,5 @@ class Radio(commands.Cog):
             
         view.update_components()
         await interaction.followup.send(embed=view.generate_embed(), view=view)
-
-
 async def setup(bot):
     await bot.add_cog(Radio(bot))

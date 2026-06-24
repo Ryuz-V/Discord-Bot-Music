@@ -25,7 +25,6 @@ class MusicBot(commands.Bot):
         ]
         self.status_index = 0
 
-        # ⏳ simpan idle task per guild
         self.idle_tasks = {}
 
     async def setup_hook(self):
@@ -53,16 +52,12 @@ class MusicBot(commands.Bot):
     async def before_rotate_status(self):
         await self.wait_until_ready()
 
-    # ==============================
-    # 🔥 AUTO DISCONNECT SYSTEM
-    # ==============================
-
     async def start_idle_timer(self, guild: discord.Guild):
         if guild.id in self.idle_tasks:
             return
 
         async def idle_check():
-            await asyncio.sleep(180)  # 3 menit
+            await asyncio.sleep(180)  # 3 minutes auto-disconnect timer
 
             vc = guild.voice_client
             if vc and not vc.is_playing():
@@ -87,11 +82,9 @@ class MusicBot(commands.Bot):
             try:
                 from music.player import autoplay_guilds, now_playing_messages
                 
-                # Matikan autoplay
                 if member.guild.id in autoplay_guilds:
                     autoplay_guilds.remove(member.guild.id)
                 
-                # Bersihkan panel saat bot disconnect
                 msg = now_playing_messages.pop(member.guild.id, None)
                 if msg:
                     try:
@@ -123,23 +116,19 @@ class MusicBot(commands.Bot):
                     except:
                         pass
 
-                # Arahkan output teks ke text chat VC yang baru
                 new_channel = after.channel
                 text_channels[guild_id] = new_channel
 
-                # Rebuild dan kirim panel baru jika musik sedang berjalan
                 if vc and (vc.is_playing() or vc.is_paused()):
                     view = RadioControl(vc) if is_radio else MusicControl(vc)
                     
                     if embed_to_send:
-                        # Kirim ulang embed sebelumnya
                         try:
                             new_msg = await new_channel.send(embed=embed_to_send, view=view)
                             now_playing_messages[guild_id] = new_msg
                         except discord.Forbidden:
                             print(f"❌ Bot tidak memiliki izin untuk mengirim pesan di VC: {new_channel.name}")
                     elif history:
-                        # Fallback ke history jika embed_to_send tidak ada
                         current_song = history[-1]
                         
                         embed_title = "<a:vinyl:1468959873969426629> RADIO PANEL" if current_song.get("source") == "radio" else "<a:vinyl:1468959873969426629> MUSIC PANEL"
@@ -172,14 +161,13 @@ class MusicBot(commands.Bot):
 
                         view = RadioControl(vc) if current_song.get("source") == "radio" else MusicControl(vc)
                         
-                        # Kirim panel ke channel VC baru
                         try:
                             new_msg = await new_channel.send(embed=embed, view=view)
                             now_playing_messages[guild_id] = new_msg
                         except discord.Forbidden:
-                            print(f"❌ Bot tidak memiliki izin untuk mengirim pesan di VC: {new_channel.name}")
+                            print(f"<:Silang:1469196939072372952> Bot din't have permission to send message in VC: {new_channel.name}")
 
             except Exception as e:
-                print(f"Terjadi kesalahan saat memindahkan panel bot: {e}")
+                print(f"<:Silang:1469196939072372952> Terjadi kesalahan saat memindahkan panel bot: {e}")
 bot = MusicBot()
 bot.run(config.TOKEN)

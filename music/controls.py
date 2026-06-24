@@ -19,7 +19,6 @@ class PlaylistSelect(discord.ui.Select):
             embed = discord.Embed(description=f"<:Silang:1469196939072372952> **Playlist `{selected_playlist}` not found!**")
             return await interaction.response.send_message(embed=embed, ephemeral=True)
 
-        # Create a clean copy of the song without non-serializable objects
         clean_song = self.song.copy()
         clean_song.pop("requester", None)
         
@@ -50,18 +49,15 @@ class MusicControl(discord.ui.View):
     async def back(self, interaction: discord.Interaction, button: discord.ui.Button):
         from music.player import history, queue, play_next
 
-        # 🚫 Tidak ada lagu sebelumnya
         if len(history) < 2:
             return await interaction.response.send_message(
                 "❌ No previous song available",
                 ephemeral=True
             )
 
-        # 🎵 Ambil lagu sebelumnya
         current_song = history.pop()
         previous_song = history.pop()
 
-        # Kembalikan ke queue
         queue.appendleft(current_song)
         queue.appendleft(previous_song)
 
@@ -73,23 +69,19 @@ class MusicControl(discord.ui.View):
 
         await interaction.response.defer()
 
-    # 👇 Diperbarui dengan custom emoji pause
     @discord.ui.button(label="Pause", emoji="<:pause8:1469637308012826716>", style=discord.ButtonStyle.secondary)
     async def pause(self, interaction: discord.Interaction, button: discord.ui.Button):
         if self.vc.is_playing():
             self.vc.pause()
             button.label = "Resume"
-            # 👇 Menggunakan custom emoji play
             button.emoji = discord.PartialEmoji.from_str("<:play8:1506851348967063614>")
         else:
             self.vc.resume()
             button.label = "Pause"
-            # 👇 Kembali ke custom emoji pause
             button.emoji = discord.PartialEmoji.from_str("<:pause8:1469637308012826716>")
 
         await interaction.response.edit_message(view=self)
 
-    # 👇 Diperbarui dengan custom emoji stop
     @discord.ui.button(label="Stop", emoji="<:stop8:1506854118210277426>", style=discord.ButtonStyle.secondary)
     async def stop(self, interaction: discord.Interaction, button: discord.ui.Button):
         from music.player import queue, now_playing_messages
@@ -273,22 +265,18 @@ class RadioControl(discord.ui.View):
         else:
             await interaction.response.send_message("Volume control not available", ephemeral=True)
 
-    # 👇 Diperbarui dengan custom emoji pause
     @discord.ui.button(label="Pause", emoji="<:pause8:1469637308012826716>", style=discord.ButtonStyle.secondary, row=0)
     async def pause(self, interaction: discord.Interaction, button: discord.ui.Button):
         if self.vc.is_playing():
             self.vc.pause()
             button.label = "Resume"
-            # 👇 Menggunakan custom emoji play
             button.emoji = discord.PartialEmoji.from_str("<:play8:1506851348967063614>")
         else:
             self.vc.resume()
             button.label = "Pause"
-            # 👇 Kembali ke custom emoji pause
             button.emoji = discord.PartialEmoji.from_str("<:pause8:1469637308012826716>")
         await interaction.response.edit_message(view=self)
 
-    # 👇 Diperbarui dengan custom emoji stop
     @discord.ui.button(label="Stop", emoji="<:stop8:1506854118210277426>", style=discord.ButtonStyle.secondary, row=0)
     async def stop(self, interaction: discord.Interaction, button: discord.ui.Button):
         from music.player import queue, now_playing_messages

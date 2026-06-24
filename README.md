@@ -1,12 +1,6 @@
-<div align="center">
-
-[![Forks][forks-shield]][forks-url] [![Stargazers][stars-shield]][stars-url] [![Issues][issues-shield]][issues-url] [![Unlicense License][license-shield]][license-url]
-
-</div>
-
 # Discord Music Bot
 
-A powerful, user-friendly, and feature-rich Discord Music Bot built with Python. This bot allows you to play high-quality music in your Discord voice channels with a wide variety of features including loop, autoplay, lyrics integration, and 24/7 continuous playback.
+
 
 ## 🌟 Features
 
@@ -44,6 +38,15 @@ Berikut adalah daftar perintah (commands) yang tersedia di bot ini:
 | `/resume` | `resume.py` | Resumes a paused track. |
 | `/skip` | `skip.py` | Skips the current track and plays the next one in the queue. |
 | `/stop` | `stop.py` | Stops the music completely and clears the queue. |
+| `/playlist create` | `playlist.py` | Create new empty playlist. |
+| `/playlist delete` | `playlist.py` | Delete an entire playlist. |
+| `/playlist list` | `playlist.py` | List all your playlist. |
+| `/playlist play` | `playlist.py` | Play your playlist song. |
+| `/playlist remove` | `playlist.py` | Remove your song in playlist. |
+| `/playlist add` | `playlist.py` | Add your song to playlist. |
+| `/playlist view` | `playlist.py` | View song in playlist. |
+
+
 
 ## 🛠️ Technologies Used
 

@@ -37,7 +37,6 @@ class Playlist(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    # Base Command Group
     playlist = app_commands.Group(name="playlist", description="Manage your music playlists")
 
     async def playlist_autocomplete(self, interaction: discord.Interaction, current: str) -> list[app_commands.Choice[str]]:

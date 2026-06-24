@@ -6,21 +6,12 @@ import asyncio
 
 from music.spotify import is_spotify_url, get_spotify_info
 from music.player import queue, play_next
-
-
-# ==============================
-# 🔎 URL CHECKER
-# ==============================
 def is_soundcloud_url(text: str) -> bool:
     return "soundcloud.com" in text
 
 def is_youtube_url(text: str) -> bool:
     return "youtube.com" in text or "youtu.be" in text
 
-
-# ==============================
-# ⏱ FORMAT DURASI
-# ==============================
 def format_duration(seconds):
     if not seconds:
         return "0:00"
@@ -29,10 +20,6 @@ def format_duration(seconds):
     m, s = divmod(seconds, 60)
     return f"{m}:{s:02d}"
 
-
-# ==============================
-# 🎵 GET SONG INFO
-# ==============================
 def get_song_info(query: str):
     ydl_opts = {
         "format": "bestaudio/best",
@@ -44,15 +31,10 @@ def get_song_info(query: str):
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
 
         try:
-            # 🔗 SoundCloud link → direct extract
             if is_soundcloud_url(query):
                 info = ydl.extract_info(query, download=False)
-
-            # 🔗 YouTube link → direct extract
             elif is_youtube_url(query):
                 info = ydl.extract_info(query, download=False)
-
-            # 🔍 BUKAN LINK → YouTube search ONLY
             else:
                 extract = ydl.extract_info(f"ytsearch1:{query}", download=False)
                 if not extract or "entries" not in extract or not extract["entries"]:
@@ -81,10 +63,6 @@ def get_song_info(query: str):
         except Exception:
             return None
 
-
-# ==============================
-# 🎧 PLAY COMMAND
-# ==============================
 class Play(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -92,7 +70,6 @@ class Play(commands.Cog):
     @app_commands.command(name="play", description="Play A Music")
     async def play(self, interaction: discord.Interaction, query: str):
 
-        # 🔒 USER HARUS DI VOICE
         if not interaction.user.voice:
             embed = discord.Embed(
                 description="<:Silang:1469196939072372952> **You must be in a voice channel**",
@@ -104,7 +81,6 @@ class Play(commands.Cog):
         user_channel = interaction.user.voice.channel
         vc = interaction.guild.voice_client
 
-        # 🔒 BOT DI VC LAIN
         if vc and vc.channel != user_channel:
             embed = discord.Embed(
                 description=f"<:Silang:1469196939072372952> **Bot is already in another voice channel**\n\nI'm currently in **{vc.channel.name}**",
@@ -115,7 +91,6 @@ class Play(commands.Cog):
 
         await interaction.response.defer(thinking=True)
 
-        # 🔌 CONNECT JIKA BELUM
         if not vc:
             try:
                 vc = await user_channel.connect(self_deaf=True)
@@ -132,15 +107,12 @@ class Play(commands.Cog):
 
         loop = asyncio.get_running_loop()
 
-        # 🎵 SPOTIFY LINK
         if is_spotify_url(query):
             try:
                 spotify_metadata = await loop.run_in_executor(None, get_spotify_info, query)
                 if spotify_metadata:
-                    # VERIFIKASI KE YOUTUBE TERLEBIH DAHULU
                     song = await loop.run_in_executor(None, get_song_info, spotify_metadata["search_query"])
                     if song:
-                        # Tetap gunakan metadata visual dari Spotify, tapi pastikan bisa diputar
                         song["title"] = spotify_metadata["title"]
                         song["author"] = spotify_metadata["author"]
                         song["thumbnail"] = spotify_metadata["thumbnail"] or song.get("thumbnail")
@@ -157,7 +129,6 @@ class Play(commands.Cog):
                 )
                 return await interaction.followup.send(embed=embed)
         else:
-            # 🔎 AMBIL INFO LAGU NON-SPOTIFY
             try:
                 song = await loop.run_in_executor(None, get_song_info, query)
             except Exception:
@@ -174,7 +145,6 @@ class Play(commands.Cog):
             "requester": interaction.user
         })
 
-        # 📩 EMBED QUEUE
         embed = discord.Embed(
             description=f"**{song['title']}** `[{format_duration(song['duration'])}]`",
         )
@@ -189,10 +159,7 @@ class Play(commands.Cog):
 
         await interaction.followup.send(embed=embed)
 
-        # ▶️ AUTO PLAY
         if not vc.is_playing() and not vc.is_paused():
             await play_next(self.bot, vc, interaction.channel)
-
-
 async def setup(bot):
     await bot.add_cog(Play(bot))

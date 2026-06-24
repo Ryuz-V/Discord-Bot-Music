@@ -5,9 +5,6 @@ import random
 from collections import deque
 from music.controls import MusicControl
 
-# ==============================
-# GLOBAL STATE
-# ==============================
 queue = deque()
 history = deque(maxlen=20)
 
@@ -17,9 +14,6 @@ autoplay_guilds = set()
 text_channels = {}
 now_playing_messages = {}
 
-# ==============================
-# YTDLP & FFMPEG OPTIONS
-# ==============================
 YDL_OPTIONS = {
     "format": "bestaudio/best",
     "quiet": True,
@@ -33,9 +27,6 @@ FFMPEG_OPTIONS = {
     "options": "-vn",
 }
 
-# ==============================
-# ⏳ IDLE TIMER (3 MENIT)
-# ==============================
 async def start_idle_timer(vc: discord.VoiceClient, channel: discord.TextChannel = None):
     guild = vc.guild
     guild_id = guild.id
@@ -80,9 +71,6 @@ def cancel_idle_timer(vc: discord.VoiceClient):
     if task:
         task.cancel()
 
-# ==============================
-# 🤖 AUTOPLAY QUERY BUILDER
-# ==============================
 def build_autoplay_query(song: dict) -> str:
     title = song.get("title", "")
     artist = title.split("-")[0]
@@ -96,9 +84,6 @@ def build_autoplay_query(song: dict) -> str:
 
     return " ".join(keywords)
 
-# ==============================
-# ▶️ PLAY NEXT SONG
-# ==============================
 async def play_next(
     bot: discord.Client,
     vc: discord.VoiceClient,
@@ -106,7 +91,6 @@ async def play_next(
 ):
     cancel_idle_timer(vc)
 
-    # QUEUE HABIS
     if not queue:
         await start_idle_timer(vc, channel=channel)
         
@@ -134,7 +118,6 @@ async def play_next(
     history.append(song)
     requester = song.get("requester")
 
-    # AMBIL STREAM URL TANPA MEMBLOCK LOOP
     def extract_stream():
         try:
             with yt_dlp.YoutubeDL(YDL_OPTIONS) as ydl:
@@ -164,7 +147,6 @@ async def play_next(
             await channel.send(embed=embed)
         except:
             pass
-        # Lanjut ke lagu berikutnya
         asyncio.run_coroutine_threadsafe(play_next(bot, vc, channel), bot.loop)
         return
         
@@ -173,9 +155,6 @@ async def play_next(
     if "webpage_url" in info:
         song["url"] = info["webpage_url"]
 
-    # ==============================
-    # AFTER PLAYING CALLBACK
-    # ==============================
     def after_playing(error):
         if error:
             print(f"Player error: {error}")
@@ -197,16 +176,13 @@ async def play_next(
         if is_stop:
             return
 
-        # 🔁 LOOP MODE
         if getattr(bot, "looping", False) and not is_skip and not is_prev:
             queue.appendleft(song)
 
-        # 🤖 AUTOPLAY MODE
         elif guild_id in autoplay_guilds and not queue and not is_prev:
             try:
                 import re
                 
-                # Helper to fallback
                 def fallback_autoplay():
                     query = build_autoplay_query(song)
                     with yt_dlp.YoutubeDL(YDL_OPTIONS) as ydl:
@@ -262,7 +238,6 @@ async def play_next(
             bot.loop,
         )
 
-    # ▶️ PLAY AUDIO
     audio_source = discord.PCMVolumeTransformer(discord.FFmpegPCMAudio(source, **FFMPEG_OPTIONS))
     audio_source.volume = getattr(vc, 'current_volume', 1.0)
 
@@ -271,9 +246,6 @@ async def play_next(
         after=after_playing,
     )
 
-    # ==============================
-    # NOW PLAYING EMBED
-    # ==============================
     embed_title = "<a:vinyl:1468959873969426629> RADIO PANEL" if song.get("source") == "radio" else "<a:vinyl:1468959873969426629> MUSIC PANEL"
     embed = discord.Embed(
         title=embed_title,
