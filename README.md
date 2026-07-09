@@ -1,26 +1,16 @@
 # Discord Music Bot
 
+Discord music bot written in Python 3.13.5+ and using several libraries such as discord.py, yt-dlp, FFmpeg, Wavelink / Lavalink and others. This bot supports several music platforms such as Spotify, YouTube, YouTube Music, and SoundCloud. 
 
+## Table of content
 
-## 🌟 Features
+- [Command List](#command-list)
+- [Requirements](#requirements)
+- [Getting started](#getting-started)
+- [FAQ](#faq)
+- [License](#license)
 
-### Core Functionality
-- **High-Quality Audio**: Stream music with high bitrate and no interruptions.
-- **Multiple Sources**: Play music from your favorite platforms seamlessly.
-- **Queue Management**: Easily manage your playlist with skip, previous, pause, and stop commands.
-- **Advanced Playback**:
-  - **Autoplay**: Automatically queues related tracks when the playlist ends.
-  - **Loop**: Repeat your favorite song or the entire queue.
-  - **24/7 Mode**: Keep the bot in the voice channel permanently.
-
-### User Experience
-- **Lyrics Support**: Instantly fetch and display lyrics for the currently playing song.
-- **Interactive UI**: Slash commands and button interactions for a modern Discord experience.
-- **Radio Mode**: Continuous radio streaming for your server.
-
-## 📜 Command List
-
-Berikut adalah daftar perintah (commands) yang tersedia di bot ini:
+## Command List
 
 | Command | File | Description |
 | :--- | :--- | :--- |
@@ -46,46 +36,55 @@ Berikut adalah daftar perintah (commands) yang tersedia di bot ini:
 | `/playlist add` | `playlist.py` | Add your song to playlist. |
 | `/playlist view` | `playlist.py` | View song in playlist. |
 
+## Requirements
 
+Make sure you have the following installed before running the bot:
 
-## 🛠️ Technologies Used
+| Requirement | Description |
+| :--- | :--- | 
+| [Python](https://www.python.org/downloads/) | The main programming language used to run this bot.|
+| [discord.py](https://github.com/Rapptz/discord.py) | Main Discord API wrapper for Python. Used for slash commands, embeds, voice client, and all bot interactions. |
+| [yt-dlp](https://github.com/yt-dlp/yt-dlp) | A powerful media downloader and extractor. Used to fetch audio streams from YouTube, YouTube Music, SoundCloud, and more. |
+| [FFmpeg](https://ffmpeg.org/) | A multimedia framework used to process and stream audio to Discord voice channels. Must be installed separately and available in your system PATH. |
 
-- **Python 3.8+**
-- **discord.py** / **Pycord** (for Discord API interactions)
-- **Wavelink / Lavalink** (for audio streaming)
+```bash
+Note: There are still a few more requirements, but I’ve 
+forgotten the rest because I added too many packages/libraries 
+to the bot that weren’t actually necessary. 
+Right now I’m too tired to work on the documentation,
+but for now, the most important parts—the core components are listed in the table above. 
+I’ll update this README file soon.  
+```
 
-## 🚀 How to Host
+## Getting started
 
-1. **Clone the Repository**: 
+Before you begin, clone this repository and install all the tools on your local machine.
+
+#### Installation
    ```bash
-   git clone [https://github.com/YourUsername/YourMusicBot.git](https://github.com/YourUsername/YourMusicBot.git)
+   # Clone the repository
+   git clone https://github.com/Ryuz-V/Discord-Bot-Music.git
 
-   <!-- LINK AND IMAGES -->
-[forks-shield]: https://img.shields.io/github/forks/Ryuz-V/Discord-Bot-Music.svg?style=for-the-badge
-[forks-url]: https://github.com/Ryuz-V/Discord-Bot-Music 
+  # Enter into the directory
+  cd Discord-Bot-Music
 
-[stars-shield]: https://img.shields.io/github/stars/Ryuz-V/Discord-Bot-Music.svg?style=for-the-badge
-[stars-url]: https://github.com/Ryuz-V/Discord-Bot-Music/stargazers
+  #Install the dependencies
+python -m pip install -r requirements.txt
 
-[issues-shield]: https://img.shields.io/github/issues/Ryuz-V/Discord-Bot-Music.svg?style=for-the-badge
-[issues-url]: https://github.com/Ryuz-V/Discord-Bot-Music/issues
+  # Configure Discord Bot Token
+  TOKEN="Insert_Your_Discord_Bot_Token_Here"
+   ```
 
-[license-shield]: https://img.shields.io/github/license/Ryuz-V/Discord-Bot-Music.svg?style=for-the-badge
-[license-url]:https://github.com/Ryuz-V/Discord-Bot-Music/blob/main/LICENSE
+#### Required permissions
+Make sure your bot has the `applications.commands` permission, which can be found under the OAuth2 tab on the [Developer Portal](https://discord.com/developers/home)
 
-[Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
-[Next-url]: https://nextjs.org/
-[React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
-[React-url]: https://reactjs.org/
-[Vue.js]: https://img.shields.io/badge/Vue.js-35495E?style=for-the-badge&logo=vuedotjs&logoColor=4FC08D
-[Vue-url]: https://vuejs.org/
-[Angular.io]: https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white
-[Angular-url]: https://angular.io/
-[Svelte.dev]: https://img.shields.io/badge/Svelte-4A4A55?style=for-the-badge&logo=svelte&logoColor=FF3E00
-[Svelte-url]: https://svelte.dev/
-[Laravel.com]: https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white
-[Laravel-url]: https://laravel.com
-[Bootstrap.com]: https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white
-[Bootstrap-url]: https://getbootstrap.com
-[JQuery.com]: https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jquery&logoColor=white
-[JQuery-url]: https://jquery.com 
+#### Configuration
+After cloning the project and installing all dependencies, you need to add your Discord API token in the `config.py` file.
+
+#### Starting the application
+``` bash
+python bot.py
+```
+## License
+
+This project is licensed under the MIT License - [LICENSE.md](https://github.com/Ryuz-V/Discord-Bot-Music/blob/main/LICENSE) see the  file for details

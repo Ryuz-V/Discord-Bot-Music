@@ -28,21 +28,15 @@ class AlwaysOn(commands.Cog):
             always_on_guilds.remove(guild_id)
 
             embed = discord.Embed(
-                title="<:24hours:1471541469201567861> 24/7 Mode Disable",
-                description="The bot will automatically leave the channel if it is not turned on"
+                description="**<:24hours:1471541469201567861> 24/7 Mode Disable**\n\nThe bot will automatically leave the channel if it is not turned on"
             )
-
             await interaction.response.send_message(embed=embed)
-
         else:
             always_on_guilds.add(guild_id)
-
             embed = discord.Embed(
-                title="<:24hours:1471541469201567861> 247 Mode Enabled",
-                description="/247 again to disable mode"
+                description="**<:24hours:1471541469201567861> 247 Mode Enabled**\n\n/247 again to disable mode"
             )
-
-            await interaction.response.send_message(embed=embed)
+        await interaction.response.send_message(embed=embed)
 
 
 async def setup(bot):

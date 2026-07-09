@@ -63,7 +63,7 @@ async def setup(bot):
         
         if not lyrics:
             embed = discord.Embed(
-                description=f"❌ Lirik untuk **{title}** tidak ditemukan.",
+                description=f"<:Silang:1469196939072372952> Lirik untuk **{title}** tidak ditemukan.",
                 color=0x2b2d31
             )
             return await interaction.followup.send(embed=embed)
