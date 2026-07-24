@@ -81,8 +81,8 @@ class RadioView(discord.ui.View):
             self.add_item(select)
             
         btn_first = discord.ui.Button(label="<<", style=discord.ButtonStyle.secondary, disabled=self.current_page == 0, row=1)
-        btn_prev = discord.ui.Button(emoji="<:previous8:1505836696259006584>", style=discord.ButtonStyle.secondary, disabled=self.current_page == 0, row=1)
-        btn_next = discord.ui.Button(emoji="<:next8:1505836654999638066>", style=discord.ButtonStyle.secondary, disabled=self.current_page >= self.total_pages - 1, row=1)
+        btn_prev = discord.ui.Button(emoji="⏮️", style=discord.ButtonStyle.secondary, disabled=self.current_page == 0, row=1)
+        btn_next = discord.ui.Button(emoji="⏭️", style=discord.ButtonStyle.secondary, disabled=self.current_page >= self.total_pages - 1, row=1)
         btn_last = discord.ui.Button(label=">>", style=discord.ButtonStyle.secondary, disabled=self.current_page >= self.total_pages - 1, row=1)
         
         btn_first.callback = self.first_page
@@ -119,7 +119,7 @@ class RadioView(discord.ui.View):
 
     async def select_callback(self, interaction: discord.Interaction):
         if not interaction.user.voice:
-            embed = discord.Embed(description="<:Silang:1469196939072372952> **You must be in a voice channel**", color=0x2b2d31)
+            embed = discord.Embed(description="❌ **You must be in a voice channel**", color=0x2b2d31)
             return await interaction.response.send_message(embed=embed, ephemeral=True)
             
         user_channel = interaction.user.voice.channel
@@ -127,7 +127,7 @@ class RadioView(discord.ui.View):
 
         if vc and vc.channel != user_channel:
             embed = discord.Embed(
-                description=f"<:Silang:1469196939072372952> **Bot is already in another voice channel**\n\nI'm currently in **{vc.channel.name}**",
+                description=f"❌ **Bot is already in another voice channel**\n\nI'm currently in **{vc.channel.name}**",
                 color=0x2b2d31
             )
             return await interaction.response.send_message(embed=embed, ephemeral=True)
@@ -151,13 +151,13 @@ class RadioView(discord.ui.View):
                 vc = await user_channel.connect(self_deaf=True)
             except TimeoutError:
                 embed = discord.Embed(
-                    description="<:Silang:1469196939072372952> **Connection Timed Out**\n\nFailed to connect to the voice channel. Discord's voice servers might be slow or blocking UDP traffic.",
+                    description="❌ **Connection Timed Out**\n\nFailed to connect to the voice channel. Discord's voice servers might be slow or blocking UDP traffic.",
                     color=0x2b2d31
                 )
                 return await interaction.followup.send(embed=embed, ephemeral=True)
             except Exception as e:
                 embed = discord.Embed(
-                    description=f"<:Silang:1469196939072372952> **Failed to Connect**\n\nAn error occurred: `{str(e)}`",
+                    description=f"❌ **Failed to Connect**\n\nAn error occurred: `{str(e)}`",
                     color=0x2b2d31
                 )
                 return await interaction.followup.send(embed=embed, ephemeral=True)
@@ -204,7 +204,7 @@ class Radio(commands.Cog):
         
         if not view.stations:
             embed = discord.Embed(
-                description="<:Silang:1469196939072372952> **No radio stations found.**",
+                description="❌ **No radio stations found.**",
                 color=0x2b2d31
             )
             return await interaction.followup.send(embed=embed)

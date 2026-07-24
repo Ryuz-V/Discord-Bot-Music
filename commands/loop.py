@@ -11,7 +11,8 @@ async def setup(bot):
         vc = interaction.guild.voice_client
         if not vc or not vc.is_playing():
             embed = discord.Embed(
-                description="<:Silang:1469196939072372952> **No music is playing**"
+                # You can add custom emojis here, for example: description="<:emoji_name:id> **Text**"
+                description="**No music is playing**"
             )
             return await interaction.response.send_message(
                 embed=embed,
@@ -24,9 +25,11 @@ async def setup(bot):
         bot.looping = not bot.looping
 
         description = (
-            "<:loop8:1470446368202948773> Loop ON"
+            # You can add custom emojis here, for example: description="<:emoji_name:id> **Text**"
+            "Loop ON"
             if bot.looping
-            else "<:loop8:1470446368202948773> Loop OFF"
+            # You can add custom emojis here, for example: description="<:emoji_name:id> **Text**"
+            else "Loop OFF"
         )
 
         embed = discord.Embed(description=description)

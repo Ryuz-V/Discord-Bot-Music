@@ -21,14 +21,16 @@ class Stop(commands.Cog):
             await vc.disconnect()
 
             embed = discord.Embed(
-                description="<:berhenti:1469188566532886588> **Stopped Playing**"
+                # You can add custom emojis here, for example: description="<:emoji_name:id> **Text**"
+                description="**Stopped Playing**"
             )
 
             await interaction.response.send_message(embed=embed)
 
         else:
             embed = discord.Embed(
-                description="<:Silang:1469196939072372952> **The Bot Is Not currently in the voice channel**"
+                # You can add custom emojis here, for example: description="<:emoji_name:id> **Text**"
+                description="**The Bot Is Not currently in the voice channel**"
             )
 
             await interaction.response.send_message(embed=embed, ephemeral=True)

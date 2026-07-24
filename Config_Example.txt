@@ -1,1 +1,3 @@
 TOKEN = "Your_Token_Bot_Discord"
+
+// change the name "Config_Example.txt" to be "Config.py" or you can just make the new one config.py

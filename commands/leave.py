@@ -11,7 +11,8 @@ async def setup(bot):
 
         if not vc:
             embed = discord.Embed(
-                description="<:Silang:1469196939072372952> **Bot Is Not In A Voice Channel**"
+                # You can add custom emojis here, for example: description="<:emoji_name:id> **Text**"
+                description="**Bot Is Not In A Voice Channel**"
             )
             await interaction.response.send_message(embed=embed, ephemeral=True)
             return
@@ -19,6 +20,7 @@ async def setup(bot):
         await vc.disconnect()
 
         embed = discord.Embed(
-            description="<:door8:1469763739271168303> **Bot Has Left The Voice Channel**"
+            # You can add custom emojis here, for example: description="<:emoji_name:id> **Text**"
+            description="**Bot Has Left The Voice Channel**"
         )
         await interaction.response.send_message(embed=embed)

@@ -14,11 +14,13 @@ class AutoPlay(commands.Cog):
 
         if guild_id in autoplay_guilds:
             autoplay_guilds.remove(guild_id)
-            embed = discord.Embed(description="<:autoplay:1468936098834284584> **Autoplay disabled**")
+            # You can add custom emojis here, for example: description="<:emoji_name:id> **Text**"
+            embed = discord.Embed(description="**Autoplay disabled**")
             return await interaction.response.send_message(embed=embed)
 
         autoplay_guilds.add(guild_id)
-        embed = discord.Embed(description="<:autoplay:1468936098834284584> **Autoplay enabled**")
+        # You can add custom emojis here, for example: description="<:emoji_name:id> **Text**"
+        embed = discord.Embed(description="**Autoplay enabled**")
         await interaction.response.send_message(embed=embed)
 
 async def setup(bot):

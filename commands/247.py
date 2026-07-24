@@ -17,7 +17,8 @@ class AlwaysOn(commands.Cog):
 
         if not interaction.user.voice:
             embed = discord.Embed(
-                description="<:Silang:1469196939072372952> **You must be in a voice channel**"
+                # You can add custom emojis here, for example: description="<:emoji_name:id> **Text**"
+                description="**You must be in a voice channel**"
             )
             await interaction.response.send_message(embed=embed, ephemeral=True)
             return
@@ -28,13 +29,15 @@ class AlwaysOn(commands.Cog):
             always_on_guilds.remove(guild_id)
 
             embed = discord.Embed(
-                description="**<:24hours:1471541469201567861> 24/7 Mode Disable**\n\nThe bot will automatically leave the channel if it is not turned on"
+                # You can add custom emojis here, for example: description="<:emoji_name:id> **Text**"
+                description="**24/7 Mode Disable**\n\nThe bot will automatically leave the channel if it is not turned on"
             )
             await interaction.response.send_message(embed=embed)
         else:
             always_on_guilds.add(guild_id)
             embed = discord.Embed(
-                description="**<:24hours:1471541469201567861> 247 Mode Enabled**\n\n/247 again to disable mode"
+                # You can add custom emojis here, for example: description="<:emoji_name:id> **Text**"
+                description="**247 Mode Enabled**\n\n/247 again to disable mode"
             )
         await interaction.response.send_message(embed=embed)
 

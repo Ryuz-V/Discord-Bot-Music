@@ -17,7 +17,8 @@ class Previous(commands.Cog):
         if not vc or not vc.is_connected():
             embed = discord.Embed(
                 description=(
-                    "<:Silang:1469196939072372952> **Error**\n"
+                    # You can add custom emojis here, for example: description="<:emoji_name:id> **Text**"
+                    "**Error**\n"
                     "Bot is not connected to a voice channel"
                 )
             )
@@ -28,7 +29,8 @@ class Previous(commands.Cog):
         if len(history) < 2:
             embed = discord.Embed(
                 description=(
-                    "<:Silang:1469196939072372952> **Error**\n"
+                    # You can add custom emojis here, for example: description="<:emoji_name:id> **Text**"
+                    "**Error**\n"
                     "No previous song available"
                 )
             )
@@ -50,7 +52,8 @@ class Previous(commands.Cog):
 
         embed = discord.Embed(
             description=(
-                "<:previous8:1505836696259006584> **Playing Previous Song**"
+                # You can add custom emojis here, for example: description="<:emoji_name:id> **Text**"
+                "**Playing Previous Song**"
             )
         )
 

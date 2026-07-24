@@ -16,4 +16,4 @@ requirements.txt
 test_files/
 .cache
 cookies_old.txt
-.json
+playlists.json

@@ -17,14 +17,16 @@ class Resume(commands.Cog):
             vc.resume()
 
             embed = discord.Embed(
-                description="<:resume8:1469637243646771404> **Music Resumed**"
+                # You can add custom emojis here, for example: description="<:emoji_name:id> **Text**"
+                description="**Music Resumed**"
             )
 
             await interaction.response.send_message(embed=embed)
 
         else:
             embed = discord.Embed(
-                description="<:Silang:1469196939072372952> **Music Is Not Paused**"
+                # You can add custom emojis here, for example: description="<:emoji_name:id> **Text**"
+                description="**Music Is Not Paused**"
             )
 
             await interaction.response.send_message(

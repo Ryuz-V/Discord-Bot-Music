@@ -141,7 +141,8 @@ async def play_next(
     
     if not info or "url" not in info:
         embed = discord.Embed(
-            description=f"<:Silang:1469196939072372952> **Playback Error**\n\nFailed to play **{song.get('title', 'Unknown')}**. Stream not found. Skipping..."
+            # You can add custom emojis here, for example: description="<:emoji_name:id> **Text**"
+            description=f"**Playback Error**\n\nFailed to play **{song.get('title', 'Unknown')}**. Stream not found. Skipping..."
         )
         try:
             await channel.send(embed=embed)

@@ -47,15 +47,6 @@ Make sure you have the following installed before running the bot:
 | [yt-dlp](https://github.com/yt-dlp/yt-dlp) | A powerful media downloader and extractor. Used to fetch audio streams from YouTube, YouTube Music, SoundCloud, and more. |
 | [FFmpeg](https://ffmpeg.org/) | A multimedia framework used to process and stream audio to Discord voice channels. Must be installed separately and available in your system PATH. |
 
-```bash
-Note: There are still a few more requirements, but I’ve 
-forgotten the rest because I added too many packages/libraries 
-to the bot that weren’t actually necessary. 
-Right now I’m too tired to work on the documentation,
-but for now, the most important parts—the core components are listed in the table above. 
-I’ll update this README file soon.  
-```
-
 ## Getting started
 
 Before you begin, clone this repository and install all the tools on your local machine.
@@ -85,6 +76,14 @@ After cloning the project and installing all dependencies, you need to add your 
 ``` bash
 python bot.py
 ```
+
 ## License
 
 This project is licensed under the MIT License - [LICENSE.md](https://github.com/Ryuz-V/Discord-Bot-Music/blob/main/LICENSE) see the  file for details
+
+``` bash
+Scribble: 
+I plan to create a music bot using this file. 
+There will be a few additional commands, or perhaps some fixes and other updates. 
+You can visit the link I’ll include in this Readme later—please stay tuned.
+```

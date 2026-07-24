@@ -42,14 +42,16 @@ async def setup(bot):
         vc = interaction.guild.voice_client
         if not vc or not (vc.is_playing() or vc.is_paused()):
             embed = discord.Embed(
-                description="<:Silang:1469196939072372952> **No music is playing**",
+                # You can add custom emojis here, for example: description="<:emoji_name:id> **Text**"
+                description="**No music is playing**",
                 color=0x2b2d31
             )
             return await interaction.response.send_message(embed=embed, ephemeral=True)
             
         if len(history) == 0:
             embed = discord.Embed(
-                description="<:Silang:1469196939072372952> **No song in history to fetch lyrics for.**",
+                # You can add custom emojis here, for example: description="<:emoji_name:id> **Text**"
+                description="**No song in history to fetch lyrics for.**",
                 color=0x2b2d31
             )
             return await interaction.response.send_message(embed=embed, ephemeral=True)
@@ -63,7 +65,8 @@ async def setup(bot):
         
         if not lyrics:
             embed = discord.Embed(
-                description=f"<:Silang:1469196939072372952> Lirik untuk **{title}** tidak ditemukan.",
+                # You can add custom emojis here, for example: description="<:emoji_name:id> **Text**"
+                description=f"Lirik untuk **{title}** tidak ditemukan.",
                 color=0x2b2d31
             )
             return await interaction.followup.send(embed=embed)
@@ -71,7 +74,8 @@ async def setup(bot):
             lyrics = lyrics[:3997] + "..."
             
         embed = discord.Embed(
-            title=f"<:lirik:1506193967316996166> Lyrics: {title}",
+            # You can add custom emojis here, for example: description="<:emoji_name:id> **Text**"
+            title=f"Lyrics: {title}",
             description=lyrics,
             color=0x2b2d31
         )

@@ -61,14 +61,16 @@ class Playlist(commands.Cog):
         
         if name in data[user_id]:
             return await interaction.response.send_message(
-                embed=discord.Embed(description=f"<:Silang:1469196939072372952> **Playlist `{name}` already exists!**"),
+                # You can add custom emojis here, for example: description="<:emoji_name:id> **Text**"
+                embed=discord.Embed(description=f"**Playlist `{name}` already exists!**"),
                 ephemeral=True
             )
             
         data[user_id][name] = {"thumbnail": thumbnail, "songs": []}
         save_playlists(data)
         
-        embed = discord.Embed(description=f"<:check8:1469745793308037297> **Playlist `{name}` has been created successfully!**")
+        # You can add custom emojis here, for example: description="<:emoji_name:id> **Text**"
+        embed = discord.Embed(description=f"**Playlist `{name}` has been created successfully!**")
         await interaction.response.send_message(embed=embed, ephemeral=True)
 
     @playlist.command(name="add", description="Add a song to a playlist.")
@@ -81,7 +83,8 @@ class Playlist(commands.Cog):
         
         if user_id not in data or name not in data[user_id]:
             return await interaction.followup.send(
-                embed=discord.Embed(description=f"<:Silang:1469196939072372952> **Playlist `{name}` not found!**"),
+                # You can add custom emojis here, for example: description="<:emoji_name:id> **Text**"
+                embed=discord.Embed(description=f"**Playlist `{name}` not found!**"),
                 ephemeral=True
             )
             
@@ -110,7 +113,8 @@ class Playlist(commands.Cog):
 
         if not song:
             return await interaction.followup.send(
-                embed=discord.Embed(description=f"<:Silang:1469196939072372952> **Could not find any music for `{url}`.**"),
+                # You can add custom emojis here, for example: description="<:emoji_name:id> **Text**"
+                embed=discord.Embed(description=f"**Could not find any music for `{url}`.**"),
                 ephemeral=True
             )
             
@@ -118,7 +122,8 @@ class Playlist(commands.Cog):
         save_playlists(data)
         
         embed = discord.Embed(
-            description=f"<:check8:1469745793308037297> **Added `{song['title']}` to playlist `{name}`!**"
+            # You can add custom emojis here, for example: description="<:emoji_name:id> **Text**"
+            description=f"**Added `{song['title']}` to playlist `{name}`!**"
         )
         if song.get("thumbnail"):
             embed.set_thumbnail(url=song["thumbnail"])
@@ -133,7 +138,8 @@ class Playlist(commands.Cog):
         
         if user_id not in data or name not in data[user_id]:
             return await interaction.response.send_message(
-                embed=discord.Embed(description=f"<:Silang:1469196939072372952> **Playlist `{name}` not found!**"),
+                # You can add custom emojis here, for example: description="<:emoji_name:id> **Text**"
+                embed=discord.Embed(description=f"**Playlist `{name}` not found!**"),
                 ephemeral=True
             )
             
@@ -141,13 +147,15 @@ class Playlist(commands.Cog):
         songs = playlist_data["songs"]
         if not songs:
             return await interaction.response.send_message(
-                embed=discord.Embed(description=f"<:Silang:1469196939072372952> **Playlist `{name}` is empty!**"),
+                # You can add custom emojis here, for example: description="<:emoji_name:id> **Text**"
+                embed=discord.Embed(description=f"**Playlist `{name}` is empty!**"),
                 ephemeral=True
             )
 
         if not interaction.user.voice:
             return await interaction.response.send_message(
-                embed=discord.Embed(description="<:Silang:1469196939072372952> **You must be in a voice channel**"),
+                # You can add custom emojis here, for example: description="<:emoji_name:id> **Text**"
+                embed=discord.Embed(description="**You must be in a voice channel**"),
                 ephemeral=True
             )
 
@@ -156,7 +164,8 @@ class Playlist(commands.Cog):
 
         if vc and vc.channel != user_channel:
             return await interaction.response.send_message(
-                embed=discord.Embed(description=f"<:Silang:1469196939072372952> **Bot is already in another voice channel**\n\nI'm currently in **{vc.channel.name}**"),
+                # You can add custom emojis here, for example: description="<:emoji_name:id> **Text**"
+                embed=discord.Embed(description=f"**Bot is already in another voice channel**\n\nI'm currently in **{vc.channel.name}**"),
                 ephemeral=True
             )
 
@@ -167,11 +176,13 @@ class Playlist(commands.Cog):
                 vc = await user_channel.connect(self_deaf=True)
             except asyncio.TimeoutError:
                 return await interaction.followup.send(
-                    embed=discord.Embed(description="<:Silang:1469196939072372952> **Connection Timed Out**\n\nFailed to connect to the voice channel.")
+                    # You can add custom emojis here, for example: description="<:emoji_name:id> **Text**"
+                    embed=discord.Embed(description="**Connection Timed Out**\n\nFailed to connect to the voice channel.")
                 )
             except Exception as e:
                 return await interaction.followup.send(
-                    embed=discord.Embed(description=f"<:Silang:1469196939072372952> **Failed to Connect**\n\nAn error occurred: `{str(e)}`")
+                    # You can add custom emojis here, for example: description="<:emoji_name:id> **Text**"
+                    embed=discord.Embed(description=f"**Failed to Connect**\n\nAn error occurred: `{str(e)}`")
                 )
 
         added_count = 0
@@ -215,11 +226,13 @@ class Playlist(commands.Cog):
         
         if user_id not in data or not data[user_id]:
             return await interaction.response.send_message(
-                embed=discord.Embed(description="<:Silang:1469196939072372952> **You don't have any playlists yet!**"),
+                # You can add custom emojis here, for example: description="<:emoji_name:id> **Text**"
+                embed=discord.Embed(description="**You don't have any playlists yet!**"),
                 ephemeral=True
             )
 
-        embed = discord.Embed(title=f"<:playlist8:1518519939915583639> {interaction.user.display_name}'s Playlists")
+        # You can add custom emojis here, for example: description="<:emoji_name:id> **Text**"
+        embed = discord.Embed(title=f"{interaction.user.display_name}'s Playlists")
         for pl_name, pl_data in data[user_id].items():
             embed.add_field(name=pl_name, value=f"{len(pl_data['songs'])} songs", inline=False)
             
@@ -233,7 +246,8 @@ class Playlist(commands.Cog):
         
         if user_id not in data or name not in data[user_id]:
             return await interaction.response.send_message(
-                embed=discord.Embed(description=f"<:Silang:1469196939072372952> **Playlist `{name}` not found!**"),
+                # You can add custom emojis here, for example: description="<:emoji_name:id> **Text**"
+                embed=discord.Embed(description=f"**Playlist `{name}` not found!**"),
                 ephemeral=True
             )
             
@@ -241,7 +255,8 @@ class Playlist(commands.Cog):
         songs = playlist_data["songs"]
         if not songs:
             return await interaction.response.send_message(
-                embed=discord.Embed(description=f"<:Silang:1469196939072372952> **Playlist `{name}` is empty!**")
+                # You can add custom emojis here, for example: description="<:emoji_name:id> **Text**"
+                embed=discord.Embed(description=f"**Playlist `{name}` is empty!**")
             )
 
         embed = discord.Embed(
@@ -275,14 +290,16 @@ class Playlist(commands.Cog):
         
         if user_id not in data or name not in data[user_id]:
             return await interaction.response.send_message(
-                embed=discord.Embed(description=f"<:Silang:1469196939072372952> **Playlist `{name}` not found!**"),
+                # You can add custom emojis here, for example: description="<:emoji_name:id> **Text**"
+                embed=discord.Embed(description=f"**Playlist `{name}` not found!**"),
                 ephemeral=True
             )
             
         songs = data[user_id][name]["songs"]
         if song_number < 1 or song_number > len(songs):
             return await interaction.response.send_message(
-                embed=discord.Embed(description=f"<:Silang:1469196939072372952> **Invalid song number! Use `/playlist view {name}` to see the numbers.**"),
+                # You can add custom emojis here, for example: description="<:emoji_name:id> **Text**"
+                embed=discord.Embed(description=f"**Invalid song number! Use `/playlist view {name}` to see the numbers.**"),
                 ephemeral=True
             )
             
@@ -290,7 +307,8 @@ class Playlist(commands.Cog):
         save_playlists(data)
         
         await interaction.response.send_message(
-            embed=discord.Embed(description=f"<:check8:1469745793308037297> **Removed `{removed_song['title']}` from playlist `{name}`!**"),
+            # You can add custom emojis here, for example: description="<:emoji_name:id> **Text**"
+            embed=discord.Embed(description=f"**Removed `{removed_song['title']}` from playlist `{name}`!**"),
             ephemeral=True
         )
 
@@ -302,7 +320,8 @@ class Playlist(commands.Cog):
         
         if user_id not in data or name not in data[user_id]:
             return await interaction.response.send_message(
-                embed=discord.Embed(description=f"<:Silang:1469196939072372952> **Playlist `{name}` not found!**"),
+                # You can add custom emojis here, for example: description="<:emoji_name:id> **Text**"
+                embed=discord.Embed(description=f"**Playlist `{name}` not found!**"),
                 ephemeral=True
             )
             
@@ -310,7 +329,8 @@ class Playlist(commands.Cog):
         save_playlists(data)
         
         await interaction.response.send_message(
-            embed=discord.Embed(description=f"<:trash8:1518522513271816192> **Playlist `{name}` has been deleted!**"),
+            # You can add custom emojis here, for example: description="<:emoji_name:id> **Text**"
+            embed=discord.Embed(description=f"**Playlist `{name}` has been deleted!**"),
             ephemeral=True
         )
 

@@ -16,7 +16,7 @@ class PlaylistSelect(discord.ui.Select):
         selected_playlist = self.values[0]
 
         if user_id not in data or selected_playlist not in data[user_id]:
-            embed = discord.Embed(description=f"<:Silang:1469196939072372952> **Playlist `{selected_playlist}` not found!**")
+            embed = discord.Embed(description=f"❌ **Playlist `{selected_playlist}` not found!**")
             return await interaction.response.send_message(embed=embed, ephemeral=True)
 
         clean_song = self.song.copy()
@@ -26,7 +26,7 @@ class PlaylistSelect(discord.ui.Select):
         save_playlists(data)
 
         embed = discord.Embed(
-            description=f"<:check8:1469745793308037297> **Added `{self.song.get('title', 'Unknown')}` to playlist `{selected_playlist}`!**"
+            description=f"✅ **Added `{self.song.get('title', 'Unknown')}` to playlist `{selected_playlist}`!**"
         )
         if self.song.get("thumbnail"):
             embed.set_thumbnail(url=self.song["thumbnail"])
@@ -45,7 +45,7 @@ class MusicControl(discord.ui.View):
         super().__init__(timeout=None)
         self.vc = vc
 
-    @discord.ui.button(label="Back", emoji="<:previous8:1505836696259006584>", style=discord.ButtonStyle.secondary)
+    @discord.ui.button(label="Back", emoji="⏮️", style=discord.ButtonStyle.secondary)
     async def back(self, interaction: discord.Interaction, button: discord.ui.Button):
         from music.player import history, queue, play_next
 
@@ -69,20 +69,20 @@ class MusicControl(discord.ui.View):
 
         await interaction.response.defer()
 
-    @discord.ui.button(label="Pause", emoji="<:pause8:1469637308012826716>", style=discord.ButtonStyle.secondary)
+    @discord.ui.button(label="Pause", emoji="⏸️", style=discord.ButtonStyle.secondary)
     async def pause(self, interaction: discord.Interaction, button: discord.ui.Button):
         if self.vc.is_playing():
             self.vc.pause()
             button.label = "Resume"
-            button.emoji = discord.PartialEmoji.from_str("<:play8:1506851348967063614>")
+            button.emoji = discord.PartialEmoji.from_str("▶️")
         else:
             self.vc.resume()
             button.label = "Pause"
-            button.emoji = discord.PartialEmoji.from_str("<:pause8:1469637308012826716>")
+            button.emoji = discord.PartialEmoji.from_str("⏸️")
 
         await interaction.response.edit_message(view=self)
 
-    @discord.ui.button(label="Stop", emoji="<:stop8:1506854118210277426>", style=discord.ButtonStyle.secondary)
+    @discord.ui.button(label="Stop", emoji="⏹️", style=discord.ButtonStyle.secondary)
     async def stop(self, interaction: discord.Interaction, button: discord.ui.Button):
         from music.player import queue, now_playing_messages
 
@@ -99,7 +99,7 @@ class MusicControl(discord.ui.View):
 
         if msg:
             embed = discord.Embed(
-                description="<:berhenti:1469188566532886588> **Stopped Playing**"
+                description="🛑 **Stopped Playing**"
             )
             try:
                 await msg.edit(embed=embed, view=None)
@@ -108,7 +108,7 @@ class MusicControl(discord.ui.View):
 
         await interaction.response.defer()
 
-    @discord.ui.button(label="Skip", emoji="<:next8:1505836654999638066>", style=discord.ButtonStyle.secondary)
+    @discord.ui.button(label="Skip", emoji="⏭️", style=discord.ButtonStyle.secondary)
     async def skip(self, interaction: discord.Interaction, button: discord.ui.Button):
         if self.vc.is_playing() or self.vc.is_paused():
             self.vc.skip_request = True
@@ -118,7 +118,7 @@ class MusicControl(discord.ui.View):
 
     @discord.ui.button(
         label="Loop",
-        emoji="<:repeat:1468936138847949025>",
+        emoji="🔁",
         style=discord.ButtonStyle.secondary
     )
     async def loop(self, interaction: discord.Interaction, button: discord.ui.Button):
@@ -129,16 +129,16 @@ class MusicControl(discord.ui.View):
         bot.looping = not bot.looping
 
         description = (
-            "<:loop8:1470446368202948773> Loop ON"
+            "🔁 Loop ON"
             if bot.looping
-            else "<:loop8:1470446368202948773> Loop OFF"
+            else "🔁 Loop OFF"
         )
         embed = discord.Embed(description=description)
         await interaction.response.send_message(embed=embed)
 
     @discord.ui.button(
         label="Autoplay",
-        emoji="<:autoplay:1468936098834284584>",
+        emoji="♾️",
         style=discord.ButtonStyle.secondary
     )
     async def autoplay(self, interaction: discord.Interaction, button: discord.ui.Button):
@@ -148,16 +148,16 @@ class MusicControl(discord.ui.View):
 
         if guild_id in autoplay_guilds:
             autoplay_guilds.remove(guild_id)
-            embed = discord.Embed(description="<:autoplay:1468936098834284584> **Autoplay disabled**")
+            embed = discord.Embed(description="♾️ **Autoplay disabled**")
             return await interaction.response.send_message(embed=embed)
 
         autoplay_guilds.add(guild_id)
-        embed = discord.Embed(description="<:autoplay:1468936098834284584> **Autoplay enabled**")
+        embed = discord.Embed(description="♾️ **Autoplay enabled**")
         await interaction.response.send_message(embed=embed)
 
     @discord.ui.button(
         label="Lyric",
-        emoji="<:lirik:1506193967316996166>",
+        emoji="📝",
         style=discord.ButtonStyle.secondary
     )
     async def lyric(self, interaction: discord.Interaction, button: discord.ui.Button):
@@ -165,11 +165,11 @@ class MusicControl(discord.ui.View):
 
         vc = self.vc
         if not vc or not (vc.is_playing() or vc.is_paused()):
-            embed = discord.Embed(description="<:Silang:1469196939072372952> **No music is playing**", color=0x2b2d31)
+            embed = discord.Embed(description="❌ **No music is playing**", color=0x2b2d31)
             return await interaction.response.send_message(embed=embed, ephemeral=True)
             
         if len(history) == 0:
-            embed = discord.Embed(description="<:Silang:1469196939072372952> **No song info available**", color=0x2b2d31)
+            embed = discord.Embed(description="❌ **No song info available**", color=0x2b2d31)
             return await interaction.response.send_message(embed=embed, ephemeral=True)
             
         current_song = history[-1]
@@ -205,14 +205,14 @@ class MusicControl(discord.ui.View):
                 pass
                 
         if not lyrics:
-            embed = discord.Embed(description=f"<:Silang:1469196939072372952> Lirik untuk **{title}** tidak ditemukan.", color=0x2b2d31)
+            embed = discord.Embed(description=f"❌ Lirik untuk **{title}** tidak ditemukan.", color=0x2b2d31)
             return await interaction.followup.send(embed=embed, ephemeral=True)
             
         if len(lyrics) > 4000:
             lyrics = lyrics[:3997] + "..."
             
         embed = discord.Embed(
-            title=f"<:lirik:1506193967316996166> Lyrics: {title}",
+            title=f"📝 Lyrics: {title}",
             description=lyrics,
             color=0x2b2d31
         )
@@ -220,7 +220,7 @@ class MusicControl(discord.ui.View):
 
     @discord.ui.button(
         label="Add to Playlist",
-        emoji="<:song8:1518511531959259166>", 
+        emoji="🎵", 
         style=discord.ButtonStyle.secondary,
         row=1
     )
@@ -229,7 +229,7 @@ class MusicControl(discord.ui.View):
         from music.player import history
 
         if len(history) == 0:
-            embed = discord.Embed(description="<:Silang:1469196939072372952> **No song info available**", color=0x2b2d31)
+            embed = discord.Embed(description="❌ **No song info available**", color=0x2b2d31)
             return await interaction.response.send_message(embed=embed, ephemeral=True)
             
         current_song = history[-1]
@@ -238,7 +238,7 @@ class MusicControl(discord.ui.View):
         user_id = str(interaction.user.id)
         
         if user_id not in data or not data[user_id]:
-            embed = discord.Embed(description="<:Silang:1469196939072372952> **You don't have any playlists yet! Use `/playlist create` first.**", color=0x2b2d31)
+            embed = discord.Embed(description="❌ **You don't have any playlists yet! Use `/playlist create` first.**", color=0x2b2d31)
             return await interaction.response.send_message(embed=embed, ephemeral=True)
 
         playlists = list(data[user_id].keys())
@@ -256,7 +256,7 @@ class RadioControl(discord.ui.View):
         super().__init__(timeout=None)
         self.vc = vc
         
-    @discord.ui.button(label="Down", emoji="<:volDOWN:1506818767018000485>", style=discord.ButtonStyle.secondary, row=0)
+    @discord.ui.button(label="Down", emoji="🔉", style=discord.ButtonStyle.secondary, row=0)
     async def vol_down(self, interaction: discord.Interaction, button: discord.ui.Button):
         if self.vc.source and isinstance(self.vc.source, discord.PCMVolumeTransformer):
             self.vc.source.volume = max(0.0, self.vc.source.volume - 0.1)
@@ -265,19 +265,19 @@ class RadioControl(discord.ui.View):
         else:
             await interaction.response.send_message("Volume control not available", ephemeral=True)
 
-    @discord.ui.button(label="Pause", emoji="<:pause8:1469637308012826716>", style=discord.ButtonStyle.secondary, row=0)
+    @discord.ui.button(label="Pause", emoji="⏸️", style=discord.ButtonStyle.secondary, row=0)
     async def pause(self, interaction: discord.Interaction, button: discord.ui.Button):
         if self.vc.is_playing():
             self.vc.pause()
             button.label = "Resume"
-            button.emoji = discord.PartialEmoji.from_str("<:play8:1506851348967063614>")
+            button.emoji = discord.PartialEmoji.from_str("▶️")
         else:
             self.vc.resume()
             button.label = "Pause"
-            button.emoji = discord.PartialEmoji.from_str("<:pause8:1469637308012826716>")
+            button.emoji = discord.PartialEmoji.from_str("⏸️")
         await interaction.response.edit_message(view=self)
 
-    @discord.ui.button(label="Stop", emoji="<:stop8:1506854118210277426>", style=discord.ButtonStyle.secondary, row=0)
+    @discord.ui.button(label="Stop", emoji="⏹️", style=discord.ButtonStyle.secondary, row=0)
     async def stop(self, interaction: discord.Interaction, button: discord.ui.Button):
         from music.player import queue, now_playing_messages
         msg = now_playing_messages.pop(interaction.guild.id, None)
@@ -289,7 +289,7 @@ class RadioControl(discord.ui.View):
             await self.vc.disconnect()
         if msg:
             embed = discord.Embed(
-                description="<:berhenti:1469188566532886588> **Stopped Playing**"
+                description="🛑 **Stopped Playing**"
             )
             try:
                 await msg.edit(embed=embed, view=None)
@@ -297,7 +297,7 @@ class RadioControl(discord.ui.View):
                 pass
         await interaction.response.defer()
 
-    @discord.ui.button(label="Up", emoji="<:volUP:1506818702295695411>", style=discord.ButtonStyle.secondary, row=0)
+    @discord.ui.button(label="Up", emoji="🔊", style=discord.ButtonStyle.secondary, row=0)
     async def vol_up(self, interaction: discord.Interaction, button: discord.ui.Button):
         if self.vc.source and isinstance(self.vc.source, discord.PCMVolumeTransformer):
             self.vc.source.volume = min(2.0, self.vc.source.volume + 0.1)
@@ -306,7 +306,7 @@ class RadioControl(discord.ui.View):
         else:
             await interaction.response.send_message("Volume control not available", ephemeral=True)
 
-    @discord.ui.button(label="Change", emoji="<:change8:1506819784933900330>", style=discord.ButtonStyle.secondary, row=1)
+    @discord.ui.button(label="Change", emoji="📻", style=discord.ButtonStyle.secondary, row=1)
     async def change(self, interaction: discord.Interaction, button: discord.ui.Button):
         await interaction.response.defer(ephemeral=True)
         
@@ -316,7 +316,7 @@ class RadioControl(discord.ui.View):
         
         if not view.stations:
             embed = discord.Embed(
-                description="<:Silang:1469196939072372952> **No radio stations found.**",
+                description="❌ **No radio stations found.**",
                 color=0x2b2d31
             )
             return await interaction.followup.send(embed=embed, ephemeral=True)

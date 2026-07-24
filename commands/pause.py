@@ -14,7 +14,8 @@ class Pause(commands.Cog):
             vc.pause()
 
             embed = discord.Embed(
-                description="<:pause8:1469637308012826716> **Music Paused**",
+                # You can add custom emojis here, for example: description="<:emoji_name:id> **Text**"
+                description="**Music Paused**",
             )
             embed.set_footer(text="User /resume to resume the music")
 
@@ -22,7 +23,8 @@ class Pause(commands.Cog):
 
         else:
             embed = discord.Embed(
-                description="<:Silang:1469196939072372952> **No Music Playing**",
+                # You can add custom emojis here, for example: description="<:emoji_name:id> **Text**"
+                description="**No Music Playing**",
             )
 
             await interaction.response.send_message(

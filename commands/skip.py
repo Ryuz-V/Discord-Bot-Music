@@ -12,7 +12,8 @@ class Skip(commands.Cog):
 
         if not vc or not vc.is_playing():
             embed = discord.Embed(
-                description="<:Silang:1469196939072372952> **No music is playing**"
+                # You can add custom emojis here, for example: description="<:emoji_name:id> **Text**"
+                description="**No music is playing**"
             )
             return await interaction.response.send_message(embed=embed)
 
@@ -20,7 +21,8 @@ class Skip(commands.Cog):
         vc.stop()
 
         embed = discord.Embed(
-            description="<:next8:1505836654999638066> **Skipped to next track**"
+            # You can add custom emojis here, for example: description="<:emoji_name:id> **Text**"
+            description="**Skipped to next track**"
         )
         await interaction.response.send_message(embed=embed)
 

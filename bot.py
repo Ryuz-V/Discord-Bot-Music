@@ -165,9 +165,11 @@ class MusicBot(commands.Bot):
                             new_msg = await new_channel.send(embed=embed, view=view)
                             now_playing_messages[guild_id] = new_msg
                         except discord.Forbidden:
-                            print(f"<:Silang:1469196939072372952> Bot din't have permission to send message in VC: {new_channel.name}")
+                            # You can add custom emojis here, for example: description="<:emoji_name:id> **Text**"
+                            print(f"Bot din't have permission to send message in VC: {new_channel.name}")
 
             except Exception as e:
-                print(f"<:Silang:1469196939072372952> Terjadi kesalahan saat memindahkan panel bot: {e}")
+                # You can add custom emojis here, for example: description="<:emoji_name:id> **Text**"
+                print(f"Terjadi kesalahan saat memindahkan panel bot: {e}")
 bot = MusicBot()
 bot.run(config.TOKEN)

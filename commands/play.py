@@ -72,7 +72,8 @@ class Play(commands.Cog):
 
         if not interaction.user.voice:
             embed = discord.Embed(
-                description="<:Silang:1469196939072372952> **You must be in a voice channel**",
+                # You can add custom emojis here, for example: description="<:emoji_name:id> **Text**"
+                description="**You must be in a voice channel**",
             )
             return await interaction.response.send_message(
                 embed=embed
@@ -83,7 +84,8 @@ class Play(commands.Cog):
 
         if vc and vc.channel != user_channel:
             embed = discord.Embed(
-                description=f"<:Silang:1469196939072372952> **Bot is already in another voice channel**\n\nI'm currently in **{vc.channel.name}**",
+                # You can add custom emojis here, for example: description="<:emoji_name:id> **Text**"
+                description=f"**Bot is already in another voice channel**\n\nI'm currently in **{vc.channel.name}**",
             )
             return await interaction.response.send_message(
                 embed=embed
@@ -96,12 +98,14 @@ class Play(commands.Cog):
                 vc = await user_channel.connect(self_deaf=True)
             except asyncio.TimeoutError:
                 embed = discord.Embed(
-                    description="<:Silang:1469196939072372952> **Connection Timed Out**\n\nFailed to connect to the voice channel. Discord's voice servers might be slow or blocking UDP traffic."
+                    # You can add custom emojis here, for example: description="<:emoji_name:id> **Text**"
+                    description="**Connection Timed Out**\n\nFailed to connect to the voice channel. Discord's voice servers might be slow or blocking UDP traffic."
                 )
                 return await interaction.followup.send(embed=embed)
             except Exception as e:
                 embed = discord.Embed(
-                    description=f"<:Silang:1469196939072372952> **Failed to Connect**\n\nAn error occurred: `{str(e)}`"
+                    # You can add custom emojis here, for example: description="<:emoji_name:id> **Text**"
+                    description=f"**Failed to Connect**\n\nAn error occurred: `{str(e)}`"
                 )
                 return await interaction.followup.send(embed=embed)
 
@@ -125,7 +129,8 @@ class Play(commands.Cog):
                 
             if not song:
                 embed = discord.Embed(
-                    description="<:Silang:1469196939072372952> **Failed to load Spotify link**\n\nMake sure it's a valid track link, and the song is available to stream."
+                    # You can add custom emojis here, for example: description="<:emoji_name:id> **Text**"
+                    description="**Failed to load Spotify link**\n\nMake sure it's a valid track link, and the song is available to stream."
                 )
                 return await interaction.followup.send(embed=embed)
         else:
@@ -136,7 +141,8 @@ class Play(commands.Cog):
                 
             if not song:
                 embed = discord.Embed(
-                    description=f"<:Silang:1469196939072372952> **Music Not Found**\n\nCould not find any music for `{query}`. Please try another keyword or link."
+                    # You can add custom emojis here, for example: description="<:emoji_name:id> **Text**"
+                    description=f"**Music Not Found**\n\nCould not find any music for `{query}`. Please try another keyword or link."
                 )
                 return await interaction.followup.send(embed=embed)
 

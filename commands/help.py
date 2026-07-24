@@ -12,12 +12,12 @@ class HelpDropdown(discord.ui.View):
     options=[
         discord.SelectOption(
             label="Information",
-            emoji="<:icon8:1470588914770251806>",
+            # You can add custom emojis here, for example: emoji="<:emoji_name:id>"
             value="info"
         ),
         discord.SelectOption(
             label="Commands",
-            emoji="<:command8:1470588859896299780>",
+            # You can add custom emojis here, for example: emoji="<:emoji_name:id>"
             value="commands"
         ),
     # add more options here if you want to add more categories and dont forget to add the elif statement in the select_callback function
@@ -32,7 +32,8 @@ class HelpDropdown(discord.ui.View):
         if value == "info":
             embed = discord.Embed(
             description=(
-            "<:icon8:1470588914770251806> **Information**\n\n"
+            # You can add custom emojis here, for example: description="<:emoji_name:id> **Text**"
+            "**Information**\n\n"
             "The modern Discord music bot designed to deliver "
             "high quality audio playback with smart features such as autoplay, "
             "24/7 mode, and multi-platform support including **Spotify, YouTube, "
@@ -43,7 +44,8 @@ class HelpDropdown(discord.ui.View):
         elif value == "commands":
             embed = discord.Embed(
         description=(
-            "<:command8:1470588859896299780> **Commands**\n\n"
+            # You can add custom emojis here, for example: description="<:emoji_name:id> **Text**"
+            "**Commands**\n\n"
             "```ansi\n"
             "\u001b[32mHere are the music commands:\u001b[0m\n"
             "```\n"
@@ -72,7 +74,7 @@ class HelpDropdown(discord.ui.View):
         )
     )
         embed.set_image(
-            url="https://cdn.discordapp.com/attachments/1461031433689759826/1470602546371493950/uma-musume-agnes-tachyon.gif" #url gif or img and if you wish to remove it from line 63 to 65 detele it
+            url="https://cdn.discordapp.com/attachments/1461031433689759826/1470602546371493950/uma-musume-agnes-tachyon.gif" #url gif or img and if you wish to remove it just delete embed.set_image
         )
         await interaction.response.edit_message(embed=embed, view=self)
 class Help(commands.Cog):
@@ -85,21 +87,26 @@ class Help(commands.Cog):
     async def help(self, interaction: discord.Interaction):
         embed = discord.Embed(
             description=(
-        "**<:icon8:1470588914770251806> Help Panel**\n"
+        # You can add custom emojis here, for example: description="<:emoji_name:id> **Text**"
+        "**Help Panel**\n"
         "\n"
-        "**<:headphone8:1474074914930823413> What is the modern Discord music bot?**\n"
+        # You can add custom emojis here, for example: description="<:emoji_name:id> **Text**"
+        "**What is the modern Discord music bot?**\n"
         "The modern Discord music bot designed to deliver "
         "high quality audio playback with smart features such as autoplay, "
         "24/7 mode, and multi-platform support including **Spotify, YouTube, "
         "and SoundCloud**.\n\n"
-        "**<:list:1474083631709421618> Available Categories**\n"
-        "<:icon8:1470588914770251806> **:** Information\n"
-        "<:command8:1470588859896299780> **:** Commands\n"
+        # You can add custom emojis here, for example: description="<:emoji_name:id> **Text**"
+        "**Available Categories**\n"
+        # You can add custom emojis here, for example: description="<:emoji_name:id> **Text**"
+        "**:** Information\n"
+        # You can add custom emojis here, for example: description="<:emoji_name:id> **Text**"
+        "**:** Commands\n"
         # you can add more categories here if you want to add more categories and dont forget to add the elif statement in the select_callback function
     )
 )
         embed.set_image(
-            url="https://cdn.discordapp.com/attachments/1461031433689759826/1470602546371493950/uma-musume-agnes-tachyon.gif" #url gif or img and if you wish to remove it from line 89 to 91 detele it
+            url="https://cdn.discordapp.com/attachments/1461031433689759826/1470602546371493950/uma-musume-agnes-tachyon.gif" #url gif or img and if you wish to remove it just delete it embed.set_image
         )
         await interaction.response.send_message(
             embed=embed,
