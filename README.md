@@ -77,6 +77,60 @@ After cloning the project and installing all dependencies, you need to add your 
 python bot.py
 ```
 
+## FAQ
+<details>
+  <summary><b>Q: The bot works, but why do some specific songs instantly skip or produce no sound?</b></summary>
+  <br>
+  <b>A:</b> If Song A plays perfectly but Song B immediately stops or skips to the next track, it means YouTube blocked the bot from reading that specific video. This usually happens because of:
+  <ul>
+    <li><b>Age-Restricted Content:</b> YouTube prevents bots from accessing explicit or age-restricted videos without an active login.</li>
+    <li><b>Geo-Blocking:</b> The song might be blocked in the region where your bot is hosted.</li>
+    <li><b>Anti-Bot Measures:</b> YouTube aggressively blocks automated downloads on highly popular official music videos.</li>
+  </ul>
+  <b>How to fix it:</b> You need to provide a valid <code>cookies.txt</code> file so YouTube thinks your bot is a real user. Please refer to the <b>YouTube Age-Restriction & Blocking Fix</b> section above to set it up!
+</details>
+
+<details>
+  <summary><b>Q: Why are there empty buttons or missing icons in the bot interface?</b></summary>
+  <br>
+  <b>A:</b> This happens due to technical limitations with using custom icons/emojis, requiring a temporary fallback to standard Discord emojis or dummy icons. A few buttons and embeds were overlooked during the transition and will be patched in upcoming updates!
+</details>
+
+<details>
+  <summary><b>Q: The bot is online/connected, but why is it still not working or playing audio?</b></summary>
+  <br>
+  <b>A:</b> If the bot successfully connects to Discord but fails to process commands or output audio, please check the following:
+  <ul>
+    <li><b>Voice Channel Permissions:</b> Make sure the bot has <b>Connect</b> and <b>Speak</b> permissions in the specific voice channel.</li>
+    <li><b>FFmpeg Installation:</b> Verify that FFmpeg is installed on your system and registered in your system's <code>PATH</code>.</li>
+    <li><b>Discord Intents:</b> Ensure <b>Message Content Intent</b> is switched ON in the Discord Developer Portal.</li>
+    <li><b>Stream Interruption:</b> YouTube might be blocking audio streams on unauthenticated requests. Double-check your <code>yt-dlp</code> version and <code>cookies.txt</code> configuration.</li>
+  </ul>
+</details>
+
+<details>
+  <summary><b>Q: Why is the music stuttering, lagging, or sounding robotic?</b></summary>
+  <br>
+  <b>A:</b> This usually happens due to network latency or resource limits on the host machine. Try these fixes:
+  <ul>
+    <li><b>FFmpeg Options:</b> Ensure you are using <code>-vn</code> in your FFmpeg options to completely ignore video processing, saving CPU power.</li>
+    <li><b>Host Performance:</b> If you are hosting the bot on a free tier service or in the local computer, CPU spikes will cause audio stuttering.</li>
+    <li><b>Voice Region:</b> Try changing the Discord server's voice region to a closer one.</li>
+  </ul>
+</details>
+
+<details>
+  <summary><b>Q: Why does it take a very long time for the bot to start playing a song or radio?</b></summary>
+  <br>
+  <b>A:</b> There are two common reasons for this delay:
+  <ul>
+    <li><b>Playlist Processing:</b> If you provided a link that contains a playlist, the extractor might be trying to process the entire playlist metadata before playing the first track. Ensure you use a direct video link, or verify that <code>'noplaylist': True</code> is set in your <code>YTDL_OPTIONS</code>.</li>
+    <li><b>Network Latency:</b> A slow internet connection on the local computer the bot can cause significant delays. This is especially true when fetching live radio streams or large audio files, as the bot needs time to buffer the data before it can start playing.</li>
+  </ul>
+</details>
+
+
+
 ## License
 
 This project is licensed under the MIT License - [LICENSE.md](https://github.com/Ryuz-V/Discord-Bot-Music/blob/main/LICENSE) see the  file for details

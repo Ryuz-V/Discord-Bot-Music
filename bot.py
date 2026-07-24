@@ -171,5 +171,30 @@ class MusicBot(commands.Bot):
             except Exception as e:
                 # You can add custom emojis here, for example: description="<:emoji_name:id> **Text**"
                 print(f"Terjadi kesalahan saat memindahkan panel bot: {e}")
+
+        # Auto-disconnect if bot is left alone
+        vc = member.guild.voice_client
+        if vc and vc.channel:
+            non_bot_members = [m for m in vc.channel.members if not m.bot]
+            if not non_bot_members:
+                await vc.disconnect()
+                print(f"🔌 Disconnected from {member.guild.name} (Voice channel empty)")
+                
+                if hasattr(self, "looping"):
+                    self.looping = False
+                
+                try:
+                    from music.player import autoplay_guilds, now_playing_messages
+                    if member.guild.id in autoplay_guilds:
+                        autoplay_guilds.remove(member.guild.id)
+                    msg = now_playing_messages.pop(member.guild.id, None)
+                    if msg:
+                        try:
+                            await msg.delete()
+                        except:
+                            pass
+                except ImportError:
+                    pass
+
 bot = MusicBot()
 bot.run(config.TOKEN)
