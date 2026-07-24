@@ -139,5 +139,5 @@ This project is licensed under the MIT License - [LICENSE.md](https://github.com
 Scribble: 
 I plan to create a music bot using this file. 
 There will be a few additional commands, or perhaps some fixes and other updates. 
-You can visit the link I’ll include in this Readme later—please stay tuned.
+You can visit the link I’ll include in this Readme later please stay tuned.
 ```
